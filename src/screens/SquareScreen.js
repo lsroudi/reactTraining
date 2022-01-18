@@ -4,24 +4,52 @@ import ColorCounter from '../components/ColorCounter';
 
 const SquareScreen = () => {
 
-    const[colors,setColors]=useState([]);
-    console.log(colors)
+    const[red,setRed]=useState(0);
+    const[green,setGreen]=useState(0);
+    const[blue,setBlue]=useState(0);
+
+    const setColor= (color,change) =>{
+        if(['red','green','blue'].includes(color)){
+            var col = eval(color);
+            if(col + change > 255 || col + change< 0){
+                return;
+            }
+
+            var part2 = color.toString();
+            var part = "set"+part2.charAt(0).toUpperCase() + part2.slice(1);
+            console.log(part)
+            var cl = part+"("+(col+change)+")";
+            console.log(cl);
+            eval(cl);
+            
+        }
+
+              
+
+    };
+    console.log(red)
     return (
     <View>
-        <ColorCounter color ="Red" />
-        <ColorCounter color ="Blue"/>
-        <ColorCounter color ="Green"/>
+        <ColorCounter 
+            onIncrease={() => {setColor('red',11)} } 
+            onDecrease={() => {setColor('red',-11)} } 
+            color ="Red" 
+        />
+        <ColorCounter 
+            onIncrease={() => setColor('green',11) } 
+            onDecrease={() => setColor('green',-11) } 
+            color ="Green" 
+        />
+        <ColorCounter 
+            onIncrease={() => setColor('blue',11) } 
+            onDecrease={() => setColor('blue',-11) } 
+            color ="Blue" 
+        />   
+        <View style={{height:200,width:150,backgroundColor:`rgb(${red},${green},${blue})`}}/>   
     </View>
     );
 };
 
-const randomRGB = ()=>{
-    const red = Math.floor(Math.random()*256);
-    const green = Math.floor(Math.random()*256);
-    const blue = Math.floor(Math.random()*256);
-
-    return `rgb(${red},${green},${blue})`;
-};
 const styles = StyleSheet.create({
 
     textStyle:{
